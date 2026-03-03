@@ -1,6 +1,11 @@
 {
   "redirects": [
     {
+      "source": "/",
+      "destination": "/flashcards/",
+      "permanent": false
+    },
+    {
       "source": "/flashcards.html",
       "destination": "/flashcards/",
       "permanent": true
