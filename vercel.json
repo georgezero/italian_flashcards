@@ -1,0 +1,20 @@
+{
+  "redirects": [
+    {
+      "source": "/flashcards.html",
+      "destination": "/flashcards/",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/flashcards/service-worker.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    }
+  ]
+}

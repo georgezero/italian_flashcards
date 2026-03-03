@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f3efe6">
+  <meta name="description" content="Offline-first Italian flashcards for French speakers. Study false friends, save difficult cards, and keep working without a network connection.">
+  <title>Italian Flashcards for French Speakers</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <p class="eyebrow">Italian for French speakers</p>
+      <div class="hero-copy">
+        <h1>Flashcards built to keep working offline.</h1>
+        <p class="hero-text">
+          Study false friends, save difficult cards, and pick up where you left off.
+        </p>
+      </div>
+      <div class="status-row" aria-live="polite">
+        <span class="status-chip" id="network-status">Checking connection…</span>
+        <span class="status-chip" id="offline-status">Offline cache unavailable</span>
+      </div>
+    </header>
+
+    <section class="panel controls-panel" aria-labelledby="study-controls-title">
+      <div class="panel-heading">
+        <div>
+          <p class="panel-kicker">Session</p>
+          <h2 id="study-controls-title">Study controls</h2>
+        </div>
+        <p class="shortcut-copy">Shortcuts: <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>Space</kbd> <kbd>←</kbd> <kbd>→</kbd></p>
+      </div>
+
+      <div class="mode-grid" role="tablist" aria-label="Study mode">
+        <button class="mode-button" data-mode="all" type="button" role="tab" aria-selected="true">All cards</button>
+        <button class="mode-button" data-mode="false-friends" type="button" role="tab" aria-selected="false">False friends</button>
+        <button class="mode-button" data-mode="hard" type="button" role="tab" aria-selected="false">Difficult cards</button>
+      </div>
+
+      <div class="action-row">
+        <button class="secondary-button" id="shuffle-button" type="button">Shuffle deck</button>
+        <button class="secondary-button" id="restart-button" type="button">Restart session</button>
+        <button class="secondary-button danger-button" id="clear-hard-button" type="button">Clear difficult cards</button>
+      </div>
+    </section>
+
+    <section class="panel progress-panel" aria-labelledby="progress-title">
+      <div class="panel-heading compact">
+        <div>
+          <p class="panel-kicker">Progress</p>
+          <h2 id="progress-title">Session status</h2>
+        </div>
+        <p class="session-note" id="session-note">Card 0 of 0</p>
+      </div>
+
+      <div class="meter" aria-hidden="true">
+        <div class="meter-fill" id="progress-fill"></div>
+      </div>
+
+      <dl class="stats-grid">
+        <div>
+          <dt>Score</dt>
+          <dd id="score-value">0%</dd>
+        </div>
+        <div>
+          <dt>Easy</dt>
+          <dd id="easy-count">0</dd>
+        </div>
+        <div>
+          <dt>Hard</dt>
+          <dd id="hard-count">0</dd>
+        </div>
+        <div>
+          <dt>Saved</dt>
+          <dd id="saved-hard-count">0</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="stage" aria-labelledby="card-stage-title">
+      <h2 class="sr-only" id="card-stage-title">Flashcard stage</h2>
+      <div class="live-region sr-only" id="live-region" aria-live="polite"></div>
+
+      <article class="card-frame" id="card-frame">
+        <button class="card-button" id="card-button" type="button" aria-describedby="card-hint">
+          <div class="card-face card-front">
+            <p class="card-label">Italian</p>
+            <p class="card-word" id="italian-word">Loading…</p>
+            <p class="card-hint" id="card-hint">Press Space or tap to reveal the answer.</p>
+          </div>
+          <div class="card-face card-back" aria-hidden="true">
+            <p class="card-label">French</p>
+            <p class="card-answer" id="french-word"></p>
+            <p class="card-label muted">English</p>
+            <p class="card-support" id="english-word"></p>
+            <p class="card-note" id="card-note" hidden></p>
+          </div>
+        </button>
+      </article>
+
+      <section class="answer-actions" aria-label="Mark this card">
+        <button class="grade-button hard-button" id="hard-button" type="button" disabled>Mark hard</button>
+        <button class="grade-button easy-button" id="easy-button" type="button" disabled>Mark easy</button>
+      </section>
+    </section>
+  </main>
+
+  <template id="empty-state-template">
+    <section class="panel state-panel">
+      <p class="panel-kicker">Nothing saved yet</p>
+      <h2>No difficult cards yet.</h2>
+      <p>Mark cards as hard during study and they will appear here for focused review, even offline.</p>
+      <button class="primary-button" type="button" data-empty-action="all">Study all cards</button>
+    </section>
+  </template>
+
+  <template id="completion-template">
+    <section class="panel state-panel">
+      <p class="panel-kicker">Session complete</p>
+      <h2 id="completion-title">You finished this deck.</h2>
+      <p id="completion-copy">Review difficult cards or start a new round.</p>
+      <div class="completion-stats" id="completion-stats"></div>
+      <div class="action-row centered">
+        <button class="primary-button" type="button" data-completion-action="review-hard">Review difficult cards</button>
+        <button class="secondary-button" type="button" data-completion-action="restart">Study again</button>
+      </div>
+    </section>
+  </template>
+
+  <script src="./cards.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
